@@ -15,7 +15,10 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public List<Student> getAllStudents() {
+    public List<Student> getAllStudents(@RequestParam(name = "keyword", required = false) String keyword) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            return studentService.search(keyword);
+        }
         return studentService.getAllStudents();
     }
 

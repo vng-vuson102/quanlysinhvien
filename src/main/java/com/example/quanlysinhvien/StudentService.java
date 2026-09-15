@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@SuppressWarnings("null")
 public class StudentService {
 
     @Autowired
@@ -14,6 +15,14 @@ public class StudentService {
 
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
+    }
+
+    // --- BỔ SUNG HÀM TÌM KIẾM TẠI ĐÂY ---
+    public List<Student> search(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return studentRepository.findAll();
+        }
+        return studentRepository.searchStudents(keyword.trim());
     }
 
     public Student getStudentById(UUID id) {
